@@ -9,6 +9,11 @@ class BookForm(forms.ModelForm):
         
         fields = "__all__"
         exclude = ('active',)
+        widgets = {
+            "retal_price_day": forms.NumberInput(attrs={'class':'form-control','id':'retalprice'}),
+            "retal_period": forms.NumberInput(attrs={'class':'form-control','id':'retaldays'}),
+            "total_rental": forms.NumberInput(attrs={'class':'form-control','id':'totalrental'}),
+        }
         
 class CatForm(forms.ModelForm):
     

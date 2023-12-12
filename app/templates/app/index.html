@@ -23,14 +23,14 @@
                 <div class="card">
                     <div class="card-header border-0">
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title">اجمالي عدد الكتب {{ forms|length }}</h3>                    
+                        <h3 class="card-title">اجمالي عدد الكتب {{book_count}}</h3>                    
                     </div>
                     </div>
                     <div class="card-body">
                     <div class="d-flex">
                         <p class="d-flex flex-column">
-                        <span class="text-bold text-lg">500</span>
-                        <span>اجمالي عدد الكتب {{ forms|length }}</span>
+                        <span class="text-bold text-lg">{{book_count}}</span>
+                        <span>اجمالي عدد الكتب</span>
                         </p>  
                     </div>
                     <!-- /.d-flex -->
@@ -116,8 +116,8 @@
                 <ul class="nav">
                 
                 {% for cat in category|slice:'4'  %}
-                    <li class="nav-item ">
-                    <a id="" class="nav-link bg-primary" href="#">{{cat.name}}</a>
+                    <li class="nav-item cat{{cat.id}}">
+                        <a id="" class="nav-link bg-primary" href="#">{{cat.name}}</a>
                     </li>
                 {% endfor %}
                 </ul>
@@ -131,7 +131,7 @@
             
             {% for forms in books  %}
                 
-                <div id="" class="col-md-4">
+                <div id="" class="col-md-4 bookhide book{{forms.category.id}}">
                     <!-- Widget: user widget style 1 -->
                     <div id="" class="card card-widget widget-user ">
                     <!-- Add the bg color to the header using any of the bg-* classes -->
@@ -141,8 +141,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">تعديل</a>
-                        <a class="dropdown-item" href="#">حذف</a>
+                        <a class="dropdown-item" href="{% url 'update' forms.id %}">تعديل</a>
+                        <a class="dropdown-item" href="{% url 'delete' forms.id %}">حذف</a>
                     <!-- Button trigger modal -->
                     </div>
                     </div>

@@ -51,7 +51,23 @@
 <!--<script src="dist/js/pages/dashboard3.js'"></script>
 -->
 <script>
+$("#retaldays").keyup(function(){
+    $("#totalrental").val($("#retaldays").val()*$("#retalprice").val())
+});
+</script>
 
+<script>
+{% for book in books %}
+
+$(".cat{{book.category.id}}").click(function(){
+    $(".bookhide").hide()
+    $(".book{{book.category.id}}").show()
+});
+
+{% endfor %}
+</script>
+
+<script>
 $("#catinput").hide()
 $("#addcat").click(function(){
     $("#catinput").show()
@@ -59,8 +75,8 @@ $("#addcat").click(function(){
 $("#backcat").click(function(){
     $("#catinput").hide()
 });
-
 </script>
+
 <script>
     $(document).ready(function(){
         $('#myModal').on('shown.bs.modal', function () {
@@ -174,7 +190,7 @@ $("#backcat").click(function(){
         type: 'pie',
         data: {
         datasets: [{
-            data: ['35','25','40'],
+            data: ['{{book_availbale}}','{{book_sold}}','{{book_rented}}'],
             backgroundColor :["#27c100","#f3545d","#fdaf4b"],
             borderWidth: 10,
             
