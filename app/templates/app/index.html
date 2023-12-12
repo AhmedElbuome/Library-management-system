@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% block content %}
 
 <div style="direction: rtl;" class="wrapper">
@@ -27,7 +30,7 @@
                     <div class="d-flex">
                         <p class="d-flex flex-column">
                         <span class="text-bold text-lg">500</span>
-                        <span>اجمالي عدد الكتب</span>
+                        <span>اجمالي عدد الكتب {{ forms|length }}</span>
                         </p>  
                     </div>
                     <!-- /.d-flex -->
@@ -89,12 +92,9 @@
                 <!-- /.card-header -->
                 <!-- form start -->
                 <form method="POST" enctype="multipart/form-data"  > 
+                {% csrf_token %}
                 <div class="card-body"> 
-                    <input type="text" class="form-control">
-                    <input type="text" class="form-control">
-                    <input type="text" class="form-control">
-                    <input type="text" class="form-control">
-                    <input type="text" class="form-control">
+                    {% bootstrap_form form %}
                     <small id='totalrente' class="form-text text-muted"></small>
                 </div>
                 <!-- /.card-body -->
@@ -115,18 +115,11 @@
                 <div class="col-4 ">
                 <ul class="nav">
                 
+                {% for cat in category|slice:'4'  %}
                     <li class="nav-item ">
-                    <a id="" class="nav-link bg-primary" href="#">تاريخ</a>
+                    <a id="" class="nav-link bg-primary" href="#">{{cat.name}}</a>
                     </li>
-                    <li class="nav-item ">
-                    <a id="" class="nav-link bg-primary" href="#">فن</a>
-                    </li>
-                    <li class="nav-item ">
-                    <a id="" class="nav-link bg-primary" href="#">ثقافة</a>
-                    </li>
-                    <li class="nav-item ">
-                    <a id="" class="nav-link bg-primary" href="#">رومانسية</a>
-                    </li>
+                {% endfor %}
                 </ul>
                 </div>
             </div>
@@ -136,7 +129,7 @@
 
             <!-- الكتب -->
             
-            {% for forms in forms  %}
+            {% for forms in books  %}
                 
                 <div id="" class="col-md-4">
                     <!-- Widget: user widget style 1 -->
@@ -155,9 +148,9 @@
                     </div>
                     
                     {% if forms.photo_book %}
-                        <div style="background: url({{forms.photo_book.url}});" class="widget-user-header bg-info">
+                        <div style="background: url({{forms.photo_book.url}}); background-size: cover" class="widget-user-header bg-info">
                     {% else %}
-                        <div  class="widget-user-header bg-info">
+                        <div class="widget-user-header bg-info">
                     {% endif %}
                         
                     <h3 class="widget-user-username">{{forms.title}}</h3>
@@ -185,14 +178,14 @@
                         <div class="description-block">
                         
                         {% if forms.status == 'availbale' %}
-                        <h5 class="description-header">${{forms.price}}</h5>
-                        <span class="description-text">السعر</span>
+                            <h5 class="description-header">${{forms.price}}</h5>
+                            <span class="description-text">السعر</span>
                         {% elif forms.status == 'rented' %}
-                        <h5 class="description-header">${{forms.retal_price_day}}</h5>
-                        <span class="description-text">السعر في اليوم</span>
+                            <h5 class="description-header">${{forms.retal_price_day}}</h5>
+                            <span class="description-text">السعر في اليوم</span>
                         {% else %}
-                        <h5 class="description-header">$none</h5>
-                        <span class="description-text">السعر في اليوم</span>
+                            <h5 class="description-header">$none</h5>
+                            <span class="description-text">السعر في اليوم</span>
                         {% endif %}
                         </div>
                         <!-- /.description-block -->
